@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import {v4 as uuidV4 } from 'uuid';
 import toast from 'react-hot-toast' // it will give pop up notification
+import { useNavigate } from 'react-router-dom'; // for redirecting from one page to another
 
 const Home = () => {
 
+    const navigate = useNavigate();
     // setting up room id to the state
     const [roomId, setRoomId] = useState("");
     const [username, setUsername] = useState("");
@@ -19,9 +21,22 @@ const Home = () => {
     // function for joining room 
     const joinRoom = () => {
 
-        if(!roomId || !username) {
+        if (!roomId || !username) {
             toast.error("ROOM ID & username is required");
             return;
+        }
+
+        navigate(`/editor/${roomId}`, {
+
+            state: {
+                username,
+            },
+        });
+    };
+
+    const handleInputEnter = (e) => {
+        if (e.code === 'Enter'){
+            joinRoom();
         }
     }
 
@@ -38,6 +53,7 @@ const Home = () => {
                     placeholder="ROOM ID"
                     onChange={(e) => setRoomId(e.target.value)} // storing state if user manually enters the room id
                     value={roomId} // binding room id to the input state
+                    onKeyUp={handleInputEnter} // directly ennter to the editor page by pressing enter
                 />
                  <input 
                     type="text"
@@ -45,6 +61,7 @@ const Home = () => {
                     placeholder="USERNAME"
                     onChange={(e) => setUsername(e.target.value)} // storing state if user manually enters the user
                     value={username} // binding username to the input state
+                    onKeyUp={handleInputEnter} // // directly enter to the editor page by pressing enter
                 />
                 <button className="btn joinBtn" onClick={joinRoom}>Join</button>
                 <span className="createInfo">
