@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Client from '../components/Client';
+import Editor from '../components/Editor';
 
 const EditorPage = () => {
 
@@ -33,9 +34,11 @@ const EditorPage = () => {
 				}
 			</div>
 		</div>
+		<button className="btn copyBtn">Copy ROOM ID</button>
+		<button className="btn leaveBtn">Leave</button>
       </div>
       <div className="editorWrap">
-        Editor goes here
+        <Editor />
       </div>
     </div>
   )
